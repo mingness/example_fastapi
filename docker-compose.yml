@@ -3,7 +3,7 @@ version: "3.7"
 services:
   backend:
     build: .
-    container_name: backend
+    container_name: backend_example
     restart: always
     ports:
       - 8080:8080
@@ -11,13 +11,36 @@ services:
       - PORT=8080
       - LOGLEVEL=DEBUG
       - PYTHONPATH=/app:/app/app
+      - SQLALCHEMY_DATABASE_URL=postgresql+psycopg2://${PG_USER}:${PG_PASSWORD}@pg_example:5432/${PG_DB}
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:11.5
+    container_name: pg_example
+    volumes:
+      - db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - POSTGRES_DB=${PG_DB}
+    restart: unless-stopped
 
   nginx-proxy:
     build: ./docker/nginx
-    container_name: nginx_proxy
+    container_name: nginx_proxy_example
     restart: always
     ports:
       - 80:80
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - /var/log/nginx:/var/log/nginx
+    depends_on:
+      - backend
+
+volumes:
+  db:
+    name: pg_example_db
+    driver: local

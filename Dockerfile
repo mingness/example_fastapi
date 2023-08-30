@@ -9,4 +9,6 @@ COPY --from=requirements-stage /tmp/requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 RUN mkdir -p ~/logs
+COPY ./prestart.sh ./alembic.ini /app
+COPY ./alembic /app/alembic
 COPY ./app /app/app
