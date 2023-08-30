@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  backend:
+    build: .
+    container_name: backend
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      - PORT=8080
+      - LOGLEVEL=DEBUG
+      - PYTHONPATH=/app:/app/app
+
+  nginx-proxy:
+    build: ./docker/nginx
+    container_name: nginx_proxy
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /var/log/nginx:/var/log/nginx
