@@ -19,10 +19,7 @@ The repository uses alembic to track changes in the database, and easily
 switch between versions.
 
 TODO:
-1. Add tests on sensors.py. The files were organized so that functionality
-   that is between database interaction, and api configuration could be
-   tested. Testing is possible by mocking the database functionality. These
-   tests could be configured to run on Github Actions with every commit.
+1. Tests could be configured to run on Github Actions with every commit.
 2. Use certs and https in nginx. Ideally urls publicly available should use
    https.
 3. Add user authentication. Ideally user authentication would be integrated
@@ -98,3 +95,16 @@ The hooks that are run are
 
 You'll need to have all hooks pass before the commit can happen. Pre-commit
 usually runs only on files added in the commit.
+
+
+### Configuring Pycharm
+
+This project uses poetry for package management. You can select the Python
+interpreter to be a poetry interpreter.
+
+To ensure the tests run correctly and are visible to Pycharm, you may need
+to add the application folder and test folders to PYTHONPATH. You can do
+this project-wide by going into the Settings, navigating to the Python
+interpreter. You'll select from a menu or drop down "Show all." Then click
+on the directory icon to see the paths the interpreter will search through.
+Manually add your application and test folders.

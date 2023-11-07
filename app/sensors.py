@@ -13,9 +13,15 @@ def list_sensors_in_db(db: DbSession) -> List[Dict]:
 
 def get_sensor_in_db(sensor_id: int, db: DbSession) -> Dict:
     crud_sensor = crud.CRUDSensors(db=db)
-    return crud_sensor.get_by_id(sensor_id).to_dict()
+    sensor = crud_sensor.get_by_id(sensor_id)
+    if not sensor:
+        return {}
+    return sensor.to_dict()
 
 
 def add_sensor_to_db(sensor_create: schemas.SensorCreate, db: DbSession) -> Dict:
     crud_sensor = crud.CRUDSensors(db=db)
-    return crud_sensor.create(sensor_create).to_dict()
+    sensor = crud_sensor.create(sensor_create)
+    if not sensor:
+        return {}
+    return sensor.to_dict()

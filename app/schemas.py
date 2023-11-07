@@ -13,7 +13,7 @@ class SensorCreate(SensorBase):
 
 class Sensor(SensorBase):
     id: int = Field(primary_key=True)
-    date_created: Optional[str]
+    datetime_created: Optional[str]
 
 
 class ResponseListSensors(BaseModel):
